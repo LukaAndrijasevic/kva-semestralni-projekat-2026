@@ -1,4 +1,9 @@
-<h1>Hello, {{ title() }}</h1>
-<p>Ja sam {{ime}} {{prezime}} i imam broj indeksa {{indeks}}</p>
-<a routerLink="/">Home</a> | <a routerLink="/about">About</a>
+<h1>Svet igracaka</h1>
+
+<a routerLink="/">Pocetna</a> | <a routerLink="/about">O nama</a>
+
 <router-outlet />
+
+<footer>
+    &copy; {{year}} Univerzitet Singidunum - Tehnicki Fakultet
+</footer>
