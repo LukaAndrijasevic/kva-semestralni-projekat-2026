@@ -1,0 +1,83 @@
+@if(toy()) {
+<div class="d-flex gap-10 mb-10">
+    
+    <mat-card class="details-card">
+        <mat-card-content>
+            <img [src]="toy()!.image" class="details-img">
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="details-card">
+        <mat-card-content>
+            <h1>{{toy()?.name}}</h1>
+            <p>{{toy()?.description}}</p>
+
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>category</mat-icon>
+                    <div matListItemTitle>Tip</div>
+                    <div matListItemLine>{{toy()?.type}}</div>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>child_care</mat-icon>
+                    <div matListItemTitle>Uzrast</div>
+                    <div matListItemLine>{{toy()?.minAge}}+ godina</div>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>group</mat-icon>
+                    <div matListItemTitle>Ciljna grupa</div>
+                    <div matListItemLine>{{toyService.getFullTargetGroupText(toy()!.targetGroup)}}</div>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>event</mat-icon>
+                    <div matListItemTitle>Datum proizvodnje</div>
+                    <div matListItemLine>{{toy()?.manufacturedAt}}</div>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>payments</mat-icon>
+                    <div matListItemTitle>Cena</div>
+                    <div matListItemLine>{{toy()?.price}} RSD</div>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <a routerLink="/" matButton>
+                <mat-icon fontIcon="arrow_back" /> Nazad na ponudu
+            </a>
+        </mat-card-actions>
+
+    </mat-card>
+</div>
+
+<mat-card class="reviews-card mx-auto">
+    <mat-card-content>
+        <h2>Recenzije ({{toy()!.reviews.length}})</h2>
+
+        @if(toy()!.reviews.length > 0) {
+        <p>Prosecna ocena: {{toyService.getAverageRating(toy()!)}} / 5</p>
+        
+        <mat-list>
+
+            @for (r of toy()!.reviews; track $index) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>{{r.author}} - ocena {{r.rating}}/5</div>
+                <div matListItemLine>{{r.comment}}</div>
+                <div matListItemLine>{{r.createdAt}}</div>
+            </mat-list-item>
+            }
+        </mat-list>
+        }
+
+        @else {
+        <p>Za ovu igracku jos nema recenzija.</p>
+        }
+        
+    </mat-card-content>
+</mat-card>
+}

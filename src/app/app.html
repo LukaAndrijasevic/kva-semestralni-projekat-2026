@@ -1,9 +1,26 @@
-<h1>Svet igracaka</h1>
+<mat-toolbar color="primary">
+    
+    <span>
+        <strong>Svet igracaka</strong>
+    </span>
+    <span class="spacer"></span>
+    
+    <a routerLink="/" matButton     >Pocetna</a>
+    <a routerLink="/about" matButton>O nama</a>
+    
+    <button matButton [matMenuTriggerFor]="korisnikMeni">Korisnik</button>
+    
+    <mat-menu #korisnikMeni="matMenu" xPosition="after">
+        <button mat-menu-item>Prijava</button>
+        <button mat-menu-item>Registracija</button>
+    </mat-menu>
 
-<a routerLink="/">Pocetna</a> | <a routerLink="/about">O nama</a>
+</mat-toolbar>
 
-<router-outlet />
+<div class="wrapper">
+    <router-outlet />
+</div>
 
-<footer>
+<footer class="text-center">
     &copy; {{year}} Univerzitet Singidunum - Tehnicki Fakultet
 </footer>

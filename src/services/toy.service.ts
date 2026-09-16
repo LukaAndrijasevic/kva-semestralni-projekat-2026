@@ -238,6 +238,6 @@ export class ToyService {
         for (let r of toy.reviews) {
             sum += r.rating
         }
-        return sum / toy.reviews.length
+        return Math.round(sum / toy.reviews.length * 10) / 10
     }
 }

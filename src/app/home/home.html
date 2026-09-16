@@ -1,24 +1,35 @@
-
-<h1>Ponuda igracaka</h1>
-
 @if(toys().length > 0) {
-    <ul>
-        @for (t of toys(); track $index){
-        <li>
-            <h3>{{t.name}}</h3>
-            <ul>
-                <li>Tip:                <strong>{{t.type}}</strong></li>
-                <li>Uzrast:             <strong>{{t.minAge}}+</strong></li>
-                <li>Ciljna grupa:       <strong>{{toyService.getFullTargetGroupText(t.targetGroup)}}</strong></li>
-                <li>Datum proizvodnje:  <strong>{{t.manufacturedAt}}</strong></li>
-                <li>Cena:               <strong>{{t.price}} RSD</strong></li>
-                <li>Prosecna ocena:     <strong>{{toyService.getAverageRating(t)}} ({{t.reviews.length}})</strong></li>
-            </ul>
-        </li>
-        }
-    </ul>
+<div class="d-flex gap-5">
+    @for (t of toys(); track $index) {
+    
+    <mat-card class="toy-card" appearance="outlined">
+        <img mat-card-image [src]="t.image" [alt]="t.name">
+        
+        <mat-card-content class="card-content">
+
+            <mat-card-title>
+                <strong>{{t.name}}</strong>
+            </mat-card-title>
+            
+            <mat-card-subtitle>{{t.type}} - {{t.minAge}}+ godina</mat-card-subtitle>
+            
+            <p>{{t.price}} RSD</p>
+            <p>Ciljna grupa: {{toyService.getFullTargetGroupText(t.targetGroup)}}</p>
+            <p>Ocena: {{toyService.getAverageRating(t)}} ({{t.reviews.length}})</p>
+        
+        </mat-card-content>
+        
+        <mat-card-actions>
+            <a [routerLink]="`/details/${t.id}`" matButton>
+                <mat-icon fontIcon="description" /> Detalji
+            </a>
+        </mat-card-actions>
+    
+    </mat-card>
+    }
+</div>
 }
 
 @else {
-    <h3>Nema dostupnih igracaka</h3>
+    <h3 class="text-center">Nema dostupnih igracaka</h3>
 }

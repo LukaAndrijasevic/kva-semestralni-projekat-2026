@@ -1,0 +1,14 @@
+.details-card {
+    min-width: 340px;
+    max-width: 460px;
+    width: 100%;
+}
+
+.details-img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.reviews-card {
+    max-width: 940px;
+}

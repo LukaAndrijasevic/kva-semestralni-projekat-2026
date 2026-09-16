@@ -1,0 +1,10 @@
+.toy-card {
+    min-width: 320px;
+    max-width: 360px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.card-content {
+    padding-top: 16px;
+}
