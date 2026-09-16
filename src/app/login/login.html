@@ -1,0 +1,33 @@
+<mat-card class="login-card mx-auto">
+    
+    <mat-card-header>
+        <h1>Prijava</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        
+        <div>
+            <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="email">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Lozinka</mat-label>
+                <input matInput type="password" [(ngModel)]="password">
+            </mat-form-field>
+        </div>
+
+        @if(error !== '') {
+            <p class="error-text">{{error}}</p>
+        }
+
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button type="button" matButton (click)="doLogin()">
+            <mat-icon fontIcon="login" /> Prijavi se
+        </button>
+    </mat-card-actions>
+
+</mat-card>

@@ -1,19 +1,29 @@
 <mat-toolbar color="primary">
-    
+
     <span>
         <strong>Svet igracaka</strong>
     </span>
     <span class="spacer"></span>
-    
+
     <a routerLink="/" matButton     >Pocetna</a>
     <a routerLink="/about" matButton>O nama</a>
-    
-    <button matButton [matMenuTriggerFor]="korisnikMeni">Korisnik</button>
-    
-    <mat-menu #korisnikMeni="matMenu" xPosition="after">
-        <button mat-menu-item>Prijava</button>
-        <button mat-menu-item>Registracija</button>
-    </mat-menu>
+
+    @if(authService.getActiveUser()) {
+        <button matButton [matMenuTriggerFor]="korisnikMeni">
+            <mat-icon fontIcon="person" /> {{authService.getActiveUser()?.firstName}}
+        </button>
+
+        <mat-menu #korisnikMeni="matMenu" xPosition="after">
+            <button mat-menu-item (click)="doLogout()">
+                <mat-icon fontIcon="logout" /> Odjava
+            </button>
+        </mat-menu>
+    }
+    @else {
+        <a routerLink="/login" matButton>
+            <mat-icon fontIcon="login" /> Prijava
+        </a>
+    }
 
 </mat-toolbar>
 
@@ -22,5 +32,5 @@
 </div>
 
 <footer class="text-center">
-    &copy; {{year}} Univerzitet Singidunum - Tehnicki Fakultet
+    &copy; {{year}} Univerzitet Singidunum - Tehnicki Fakultet - KVA
 </footer>
