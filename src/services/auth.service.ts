@@ -1,4 +1,6 @@
-import { UserModel } from "../models/user.model"
+import { UserModel }        from "../models/user.model"
+import { ReservationModel } from "../models/reservation.model"
+import { ToyModel }         from "../models/toy.model"
 
 const USERS = 'users'
 const ACTIVE = 'active'
@@ -32,7 +34,7 @@ export class AuthService {
                 return true
             }
         }
-
+        
         return false
     }
 
@@ -49,5 +51,73 @@ export class AuthService {
 
     static logout() {
         localStorage.removeItem(ACTIVE)
+    }
+
+    static updateActiveUser(newUserData: UserModel) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                u.firstName     = newUserData.firstName
+                u.lastName      = newUserData.lastName
+                u.phone         = newUserData.phone
+                u.address       = newUserData.address
+                u.city          = newUserData.city
+                u.favoriteType  = newUserData.favoriteType
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static updateActiveUserPassword(newPassword: string) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                u.password = newPassword
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static createReservation(reservation: Partial<ReservationModel>, toy: ToyModel) {
+        reservation.state       = 'r'
+        reservation.toyId       = toy.id
+        reservation.name        = toy.name
+        reservation.price       = toy.price
+        reservation.image       = toy.image
+        reservation.rating      = 0
+        reservation.createdAt   = new Date().toISOString()
+
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                u.reservations.push(reservation as ReservationModel)
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static getReservationsByState(state: 'r' | 'p' | 'o') {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                return u.reservations.filter((r) => r.state === state)
+            }
+        }
+
+        return []
+    }
+
+    static getAllReservations(): ReservationModel[] {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                return u.reservations
+            }
+        }
+
+        return []
     }
 }

@@ -1,0 +1,80 @@
+@if(toy() != null) {
+<div class="d-flex gap-10">
+
+    <mat-card class="flex-card" appearance="outlined">
+        <img mat-card-image [src]="toy()!.image" [alt]="toy()!.name">
+        <mat-card-content>
+            <mat-list>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>toys</mat-icon>
+                    <div matListItemTitle>Naziv</div>
+                    <div matListItemLine>{{toy()!.name}}</div>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>category</mat-icon>
+                    <div matListItemTitle>Tip</div>
+                    <div matListItemLine>{{toy()!.type}}</div>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>child_care</mat-icon>
+                    <div matListItemTitle>Uzrast</div>
+                    <div matListItemLine>{{toy()!.minAge}}+ godina</div>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>group</mat-icon>
+                    <div matListItemTitle>Ciljna grupa</div>
+                    <div matListItemLine>{{toyService.getFullTargetGroupText(toy()!.targetGroup)}}</div>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>payments</mat-icon>
+                    <div matListItemTitle>Cena po komadu</div>
+                    <div matListItemLine>{{toy()!.price}} RSD</div>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="flex-card" appearance="outlined">
+        <mat-card-header>
+            <h1>Rezervacija</h1>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p>{{toy()!.description}}</p>
+
+            <mat-form-field class="full-width">
+                <mat-label>Kolicina</mat-label>
+                <input matInput type="number" min="1" [(ngModel)]="reservation.count">
+            </mat-form-field>
+
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>sell</mat-icon>
+                    <div matListItemTitle>Cena po komadu</div>
+                    <div matListItemLine>{{toy()!.price}} RSD</div>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>shopping_basket</mat-icon>
+                    <div matListItemTitle>Kolicina</div>
+                    <div matListItemLine>{{reservation.count}}</div>
+                </mat-list-item>
+            </mat-list>
+
+            <h2>Ukupno: {{calculateTotal()}} RSD</h2>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button matButton type="button" (click)="placeReservation()">
+                <mat-icon fontIcon="add_shopping_cart" /> Rezervisi
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>
+}

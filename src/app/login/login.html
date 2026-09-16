@@ -1,11 +1,11 @@
-<mat-card class="login-card mx-auto">
-    
+<mat-card class="small-card mx-auto">
+
     <mat-card-header>
         <h1>Prijava</h1>
     </mat-card-header>
 
     <mat-card-content>
-        
+
         <div>
             <mat-form-field class="full-width">
                 <mat-label>Email</mat-label>
@@ -17,10 +17,6 @@
                 <input matInput type="password" [(ngModel)]="password">
             </mat-form-field>
         </div>
-
-        @if(error !== '') {
-            <p class="error-text">{{error}}</p>
-        }
 
     </mat-card-content>
 

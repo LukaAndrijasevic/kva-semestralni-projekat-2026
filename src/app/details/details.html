@@ -45,12 +45,14 @@
             </mat-list>
         </mat-card-content>
 
-        <mat-card-actions>
-            <a routerLink="/" matButton>
+        <mat-card-actions class="gap-10">
+            <button matButton type="button" (click)="goToReservation()">
+                <mat-icon fontIcon="add_shopping_cart" /> Rezervisi
+            </button>
+            <a routerLink="/" matButton>            
                 <mat-icon fontIcon="arrow_back" /> Nazad na ponudu
             </a>
         </mat-card-actions>
-
     </mat-card>
 </div>
 

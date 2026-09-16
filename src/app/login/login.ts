@@ -6,6 +6,7 @@ import { MatInputModule }  from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule }   from '@angular/material/icon';
 import { AuthService }     from '../../services/auth.service';
+import { Alerts }          from '../alerts';
 
 @Component({
   imports:  [
@@ -23,7 +24,6 @@ import { AuthService }     from '../../services/auth.service';
 export class Login {
   email:    string = 'luka@singidunum.com'
   password: string = 'singidunum123'
-  error:    string = ''
 
   constructor(private router: Router) {
     if (AuthService.getActiveUser()) {
@@ -37,6 +37,6 @@ export class Login {
       return
     }
 
-    this.error = 'Pogresan email ili lozinka!'
+    Alerts.error('Pogresan email ili lozinka!')
   }
 }

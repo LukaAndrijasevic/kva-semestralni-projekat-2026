@@ -14,9 +14,15 @@
         </button>
 
         <mat-menu #korisnikMeni="matMenu" xPosition="after">
+
+            <a routerLink="/user" mat-menu-item>
+                <mat-icon fontIcon="manage_accounts" /> Profil
+            </a>
+
             <button mat-menu-item (click)="doLogout()">
                 <mat-icon fontIcon="logout" /> Odjava
             </button>
+
         </mat-menu>
     }
     @else {

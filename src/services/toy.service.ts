@@ -42,7 +42,7 @@ export class ToyService {
                     {
                         author:    'Ana Antic',
                         rating:    5,
-                        comment:   'Prala sam ga tri puta u masini, i dalje izgleda kao nov.',
+                        comment:   'Prala sam ga tri puta u masini i dalje izgleda kao nov.',
                         createdAt: '2025-05-19'
                     }
                 ]
