@@ -20,10 +20,14 @@
 
     </mat-card-content>
 
-    <mat-card-actions>
+    <mat-card-actions class="gap-10">
         <button type="button" matButton (click)="doLogin()">
             <mat-icon fontIcon="login" /> Prijavi se
         </button>
+
+        <a routerLink="/signup" matButton>
+            <mat-icon fontIcon="person_add" /> Nemam nalog
+        </a>
     </mat-card-actions>
 
 </mat-card>

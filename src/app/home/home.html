@@ -1,35 +1,77 @@
-@if(toys().length > 0) {
-<div class="d-flex gap-5">
-    @for (t of toys(); track $index) {
-    
-    <mat-card class="toy-card" appearance="outlined">
-        <img mat-card-image [src]="t.image" [alt]="t.name">
-        
-        <mat-card-content class="card-content">
+<mat-card class="hero mb-10">
+    <mat-card-content>
+        <h1 class="hero-title">Svet igracaka</h1>
+        <p class="hero-text">
+            Igracke za svaki uzrast, sa opisima, ocenama i recenzijama roditelja.
+            Pronadjite pravu i rezervisite je u nekoliko klikova.
+        </p>
+        <a routerLink="/store" matButton="filled" class="hero-button">
+            <mat-icon fontIcon="storefront" /> Pogledaj ponudu
+        </a>
+    </mat-card-content>
+</mat-card>
 
-            <mat-card-title>
-                <strong>{{t.name}}</strong>
-            </mat-card-title>
-            
-            <mat-card-subtitle>{{t.type}} - {{t.minAge}}+ godina</mat-card-subtitle>
-            
-            <p>{{t.price}} RSD</p>
-            <p>Ciljna grupa: {{toyService.getFullTargetGroupText(t.targetGroup)}}</p>
-            <p>Ocena: {{toyService.getAverageRating(t)}} ({{t.reviews.length}})</p>
-        
+<h2 class="section-title">Pronadjite po vrsti</h2>
+
+<div class="d-flex gap-10 mb-10">
+    @for (t of toyService.getTypes(); track t) {
+    <a [routerLink]="['/store']" [queryParams]="{ type: t }" class="type-link">
+        <mat-card class="type-card" appearance="outlined">
+            <mat-card-content class="type-content">
+                <mat-icon class="type-icon" [fontIcon]="getTypeIcon(t)" />
+                <div class="type-name">{{t}}</div>
+            </mat-card-content>
+        </mat-card>
+    </a>
+    }
+</div>
+
+<h2 class="section-title">Najbolje ocenjeno</h2>
+
+<div class="d-flex gap-10 mb-10">
+    @for (t of getTopRated(); track t.id) {
+    <mat-card class="top-card" appearance="outlined">
+        <img mat-card-image [src]="t.image" [alt]="t.name">
+        <mat-card-content class="top-content">
+            <div class="top-name">{{t.name}}</div>
+            <div class="top-rating">
+                <mat-icon fontIcon="star" /> {{toyService.getAverageRating(t)}} / 5
+            </div>
+            <p class="top-price">{{t.price}} RSD</p>
         </mat-card-content>
-        
         <mat-card-actions>
-            <a [routerLink]="`/details/${t.id}`" matButton>
-                <mat-icon fontIcon="description" /> Detalji
+            <a [routerLink]="`/details/${t.id}`" matButton class="full-width">
+                <mat-icon fontIcon="visibility" /> Detalji
             </a>
         </mat-card-actions>
-    
     </mat-card>
     }
 </div>
-}
 
-@else {
-    <h3 class="text-center">Nema dostupnih igracaka</h3>
-}
+<h2 class="section-title">Zasto kod nas</h2>
+
+<div class="d-flex gap-10">
+    <mat-card class="info-card" appearance="outlined">
+        <mat-card-content class="info-content">
+            <mat-icon class="info-icon" fontIcon="search" />
+            <h3>Laka pretraga</h3>
+            <p>Filtrirajte igracke po tipu, uzrastu, ceni, oceni i godini proizvodnje.</p>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card" appearance="outlined">
+        <mat-card-content class="info-content">
+            <mat-icon class="info-icon" fontIcon="rate_review" />
+            <h3>Prave recenzije</h3>
+            <p>Procitajte iskustva roditelja i dece koji su igracku vec koristili.</p>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="info-card" appearance="outlined">
+        <mat-card-content class="info-content">
+            <mat-icon class="info-icon" fontIcon="event_available" />
+            <h3>Brza rezervacija</h3>
+            <p>Rezervisite igracku, pratite status i ocenite je kada stigne.</p>
+        </mat-card-content>
+    </mat-card>
+</div>

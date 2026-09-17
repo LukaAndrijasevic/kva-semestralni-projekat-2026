@@ -1,3 +1,8 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
 .spacer {
     flex: 1 1 auto;
 }
@@ -7,6 +12,42 @@
     min-height: 75vh;
 }
 
+.desktop-nav {
+    display: flex;
+    gap: 5px;
+}
+
+.mobile-nav {
+    display: none;
+}
+
 footer {
     padding-bottom: 20px;
+}
+
+.cart-badge {
+    display:    inline-block;
+    min-width:      20px;
+    height:         20px;
+    line-height:    20px;
+    margin-left:    6px;
+    padding:        0 6px;
+    border-radius:  10px;
+
+    background-color:   var(--mat-sys-tertiary);
+    color:              var(--mat-sys-on-tertiary);
+    
+    font-size:      12px;
+    font-weight:    700;
+    text-align:     center;
+}
+
+@media screen and (max-width: 900px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
 }

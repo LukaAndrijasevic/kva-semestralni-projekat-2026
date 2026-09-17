@@ -1,7 +1,28 @@
 import { ToyModel } from "../models/toy.model"
 
+const REVIEWS = 'reviews'
+
 export class ToyService {
     static getToys(): ToyModel[] {
+        const toys  = this.getBaseToys()
+        const extra = this.getExtraReviews()
+
+        for (let t of toys) {
+            for (let e of extra) {
+                if(e.toyId === t.id) {
+                    t.reviews.push({
+                        author:     e.author,
+                        rating:     e.rating,
+                        comment:    e.comment,
+                        createdAt:  e.createdAt,
+                    })
+                }
+            }
+        }
+        return toys
+    }
+
+    static getBaseToys(): ToyModel[] {
         return [
             {
                 id:             1,
@@ -12,7 +33,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-03-14',
                 price:          2490,
-                image:          'https://placehold.co/400x300?text=Kocke',
+                image:          'slike/kocke.webp',
                 reviews: [
                     {
                         author:    'Marija Petrovic',
@@ -37,7 +58,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-01-20',
                 price:          1890,
-                image:          'https://placehold.co/400x300?text=Medved',
+                image:          'slike/medved.jpg',
                 reviews: [
                     {
                         author:    'Ana Antic',
@@ -56,10 +77,10 @@ export class ToyService {
                 targetGroup:    'b',
                 manufacturedAt: '2025-05-08',
                 price:          5990,
-                image:          'https://placehold.co/400x300?text=Auto',
+                image:          'slike/auto.webp',
                 reviews: [
                     {
-                        author:    'Aleksandar Vidakovic',
+                        author:    'Aleksandar Vidovic',
                         rating:    4,
                         comment:   'Brz je, baterija traje oko 40 minuta po punjenju.',
                         createdAt: '2025-08-01'
@@ -75,7 +96,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2024-11-30',
                 price:          990,
-                image:          'https://placehold.co/400x300?text=Igra',
+                image:          'slike/igra.webp',
                 reviews: []
             },
             {
@@ -87,7 +108,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-02-17',
                 price:          4590,
-                image:          'https://placehold.co/400x300?text=Globus',
+                image:          'slike/globus.jpg',
                 reviews: [
                     {
                         author:    'Nina Nikolic',
@@ -106,7 +127,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-04-03',
                 price:          4290,
-                image:          'https://placehold.co/400x300?text=Voz',
+                image:          'slike/voz.jpg',
                 reviews: []
             },
             {
@@ -118,7 +139,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-01-09',
                 price:          1590,
-                image:          'https://placehold.co/400x300?text=Slagalica',
+                image:          'slike/slagalica.webp',
                 reviews: [
                     {
                         author:    'Ivana Bolic',
@@ -137,7 +158,7 @@ export class ToyService {
                 targetGroup:    'g',
                 manufacturedAt: '2025-02-28',
                 price:          1290,
-                image:          'https://placehold.co/400x300?text=Zeka',
+                image:          'slike/zeka.webp',
                 reviews: []
             },
             {
@@ -149,7 +170,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2024-10-12',
                 price:          890,
-                image:          'https://placehold.co/400x300?text=Slikovnica',
+                image:          'slike/slikovnica.jpg',
                 reviews: [
                     {
                         author:    'Jelena Todorovic',
@@ -168,7 +189,7 @@ export class ToyService {
                 targetGroup:    'a',
                 manufacturedAt: '2025-06-01',
                 price:          2190,
-                image:          'https://placehold.co/400x300?text=Crtanje',
+                image:          'slike/crtanje.webp',
                 reviews: [
                     {
                         author:    'Sofija Petrovic',
@@ -187,7 +208,7 @@ export class ToyService {
                 targetGroup:    'g',
                 manufacturedAt: '2025-03-22',
                 price:          1690,
-                image:          'https://placehold.co/400x300?text=Narukvice',
+                image:          'slike/narukvice.jpg',
                 reviews: [
                     {
                         author:    'Anastasija Jovanovic',
@@ -201,12 +222,12 @@ export class ToyService {
                 id:             12,
                 name:           'Robot transformer Zed',
                 description:    'Figura robota koja se transformise u vozilo, sa svetlosnim efektima.',
-                type:           'Karakter',
+                type:           'Akciona figura',
                 minAge:         6,
                 targetGroup:    'b',
                 manufacturedAt: '2025-05-27',
                 price:          3190,
-                image:          'https://placehold.co/400x300?text=Robot',
+                image:          'slike/robot.webp',
                 reviews: []
             }
         ]
@@ -222,8 +243,18 @@ export class ToyService {
 
     static getTypes() {
         const set = new Set<string>()
-        this.getToys().forEach(t => set.add(t.type))
+        this.getBaseToys().forEach(t => set.add(t.type))
         return Array.from(set)
+    }
+
+    static getTargetGroups(): ('g' | 'b' | 'a')[] {
+        return ['g', 'b', 'a']
+    }
+
+    static getAges() {
+        const set = new Set<number>()
+        this.getBaseToys().forEach(t => set.add(t.minAge))
+        return Array.from(set).sort((a, b) => a - b)
     }
 
     static getFullTargetGroupText(tg: 'g' | 'b' | 'a') {
@@ -239,5 +270,32 @@ export class ToyService {
             sum += r.rating
         }
         return Math.round(sum / toy.reviews.length * 10) / 10
+    }
+
+    static getExtraReviews(): any[] {
+        if (localStorage.getItem(REVIEWS) == null) {
+            localStorage.setItem(REVIEWS, JSON.stringify([]))
+        }
+
+        return JSON.parse(localStorage.getItem(REVIEWS)!)
+    }
+
+    static addReview(toyId: number, author: string, rating: number, comment: string,) {
+        const reviews = this.getExtraReviews()
+        reviews.push({
+            toyId,
+            author,
+            rating,
+            comment,
+            createdAt: new Date().toISOString().substring(0,10)
+        })
+
+        localStorage.setItem(REVIEWS, JSON.stringify(reviews))
+    }
+
+    static getYears() {
+        const set = new Set<string>()
+        this.getBaseToys().forEach(t => set.add(t.manufacturedAt.substring(0,4)))
+        return Array.from(set).sort()
     }
 }

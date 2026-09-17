@@ -1,0 +1,205 @@
+@if(getReserved().length > 0) {
+<mat-card class="mb-10">
+
+    <mat-card-header>
+        <h1>Rezervisane igracke</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table mat-table [dataSource]="getReserved()" class="mat-elevation-z8">
+            
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Igracka</th>
+                <td mat-cell *matCellDef="let r">{{r.name}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Cena</th>
+                <td mat-cell *matCellDef="let r">{{r.price}} RSD</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef>Kolicina</th>
+                <td mat-cell *matCellDef="let r">{{r.count}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>Ukupno</th>
+                <td mat-cell *matCellDef="let r">{{utils.calculateTotal(r)}} RSD</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef>Datum rezervacije</th>
+                <td mat-cell *matCellDef="let r">{{utils.formatDate(r.createdAt)}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef>Opcije</th>
+                <td mat-cell *matCellDef="let r">
+                    <a [routerLink]="`/details/${r.toyId}`" matButton>
+                        <mat-icon fontIcon="description" /> Detalji
+                    </a>
+                    <button type="button" matButton (click)="editReservation(r)">
+                        <mat-icon fontIcon="edit" /> Izmeni
+                    </button>
+                    <button type="button" matButton (click)="cancelReservation(r)">
+                        <mat-icon fontIcon="cancel" /> Otkazi
+                    </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        </table>
+
+        <h3>Ukupan iznos: {{calculateTotal()}} RSD</h3>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button type="button" matButton (click)="receiveAll()">
+            <mat-icon fontIcon="local_shipping" /> Potvrdi prijem
+        </button>
+    </mat-card-actions>
+</mat-card>
+}
+
+@if(getReceived().length > 0) {
+<mat-card class="mb-10">
+    <mat-card-header>
+        <h1>Pristigle igracke</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table mat-table [dataSource]="getReceived()" class="mat-elevation-z8">
+            
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Igracka</th>
+                <td mat-cell *matCellDef="let r">{{r.name}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Cena</th>
+                <td mat-cell *matCellDef="let r">{{r.price}} RSD</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef>Kolicina</th>
+                <td mat-cell *matCellDef="let r">{{r.count}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>Ukupno</th>
+                <td mat-cell *matCellDef="let r">{{utils.calculateTotal(r)}} RSD</td>
+            </ng-container>
+           
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef>Datum rezervacije</th>
+                <td mat-cell *matCellDef="let r">{{utils.formatDate(r.createdAt)}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef>Opcije</th>
+                <td mat-cell *matCellDef="let r">
+                    <a [routerLink]="`/details/${r.toyId}`" matButton>
+                        <mat-icon fontIcon="description" /> Detalji
+                    </a>
+
+                    @if(r.rating == 0) {
+                        <button type="button" matButton (click)="rateReservation(r)">
+                            <mat-icon fontIcon="star_border" /> Oceni
+                        </button>
+                    }
+
+                    @else {
+                        <button type="button" matButton disabled>
+                            <mat-icon fontIcon="star" /> Ocena: {{r.rating}}/5
+                        </button>
+                    }
+                    <button type="button" matButton (click)="deleteReservation(r)">
+                        <mat-icon fontIcon="delete" /> Obrisi
+                    </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+}
+
+@if(getCanceled().length > 0) {
+<mat-card class="mb-10">
+    <mat-card-header>
+        <h1>Otkazane rezervacije</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <table mat-table [dataSource]="getCanceled()" class="mat-elevation-z8">
+            
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Igracka</th>
+                <td mat-cell *matCellDef="let r">{{r.name}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Cena</th>
+                <td mat-cell *matCellDef="let r">{{r.price}} RSD</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef>Kolicina</th>
+                <td mat-cell *matCellDef="let r">{{r.count}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef>Ukupno</th>
+                <td mat-cell *matCellDef="let r">{{utils.calculateTotal(r)}} RSD</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef>Datum rezervacije</th>
+                <td mat-cell *matCellDef="let r">{{utils.formatDate(r.createdAt)}}</td>
+            </ng-container>
+            
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef>Opcije</th>
+                <td mat-cell *matCellDef="let r">
+                    <a [routerLink]="`/details/${r.toyId}`" matButton>
+                        <mat-icon fontIcon="description" /> Detalji
+                    </a>
+                    <button type="button" matButton (click)="deleteReservation(r)">
+                        <mat-icon fontIcon="delete" /> Obrisi
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button type="button" matButton (click)="deleteCanceled()">
+            <mat-icon fontIcon="delete_sweep" /> Obrisi sve otkazane
+        </button>
+    </mat-card-actions>
+</mat-card>
+}
+
+@if(getReserved().length === 0 && getReceived().length === 0 && getCanceled().length === 0) {
+<mat-card class="small-card mx-auto">
+    
+    <mat-card-content>
+        <h2>Korpa je prazna</h2>
+        <p>Jos niste rezervisali nijednu igracku.</p>
+    </mat-card-content>
+    
+    <mat-card-actions>
+        <a routerLink="/" matButton>
+            <mat-icon fontIcon="storefront" /> Pogledaj ponudu
+        </a>
+    </mat-card-actions>
+</mat-card>
+}

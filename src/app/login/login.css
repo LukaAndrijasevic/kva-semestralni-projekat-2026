@@ -1,0 +1,9 @@
+.small-card {
+    margin-top: 40px;
+    padding: 12px;
+}
+
+mat-card-header {
+    justify-content: center;
+    margin-bottom: 8px;
+}

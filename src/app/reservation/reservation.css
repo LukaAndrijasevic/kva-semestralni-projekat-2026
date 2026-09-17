@@ -1,0 +1,4 @@
+.flex-card img {
+    height: 260px;
+    object-fit: cover;
+}

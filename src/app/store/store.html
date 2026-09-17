@@ -1,0 +1,146 @@
+<h1 class="page-title">Ponuda igracaka</h1>
+<p class="page-subtitle">Pronadjite pravu igracku za svoje dete</p>
+
+<mat-card class="filter-card" appearance="outlined">
+<mat-card-content>
+<div class="d-flex gap-10">
+
+    <mat-form-field>
+        <mat-label>Pretraga</mat-label>
+        <input matInput type="text" [(ngModel)]="search" (keyup)="filter()">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Tip igracke</mat-label>
+
+        <mat-select [(ngModel)]="type" (ngModelChange)="filter()">
+            <mat-option value="">Svi tipovi</mat-option>
+            @for (t of toyService.getTypes(); track t) {
+            <mat-option [value]="t">{{t}}</mat-option>
+            }
+        </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Ciljna grupa</mat-label>
+
+        <mat-select [(ngModel)]="targetGroup" (ngModelChange)="filter()">
+            <mat-option value="">Sve grupe</mat-option>
+            @for (g of toyService.getTargetGroups(); track g) {
+            <mat-option [value]="g">{{toyService.getFullTargetGroupText(g)}}</mat-option>
+            }
+        </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Uzrast deteta</mat-label>
+        <mat-select [(ngModel)]="minAge" (ngModelChange)="filter()">
+            <mat-option value="">Svi uzrasti</mat-option>
+            @for (a of toyService.getAges(); track a) {
+            <mat-option [value]="a">{{a}} godina i vise</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Maksimalna cena</mat-label>
+        <input matInput type="number" [(ngModel)]="maxPrice" (keyup)="filter()">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Minimalna ocena</mat-label>
+        <mat-select [(ngModel)]="minRating" (ngModelChange)="filter()">
+            <mat-option value="">Sve ocene</mat-option>
+            <mat-option value="1">1 i vise</mat-option>
+            <mat-option value="2">2 i vise</mat-option>
+            <mat-option value="3">3 i vise</mat-option>
+            <mat-option value="4">4 i vise</mat-option>
+            <mat-option value="5">Samo 5</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Godina proizvodnje</mat-label>
+
+        <mat-select [(ngModel)]="year" (ngModelChange)="filter()">
+            <mat-option value="">Sve godine</mat-option>
+            @for (y of toyService.getYears(); track y){
+                <mat-option [value]="y">{{y}}</mat-option>
+            }
+        </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Sortiraj</mat-label>
+        
+        <mat-select [(ngModel)]="sort" (ngModelChange)="applySort()">
+            <mat-option value=""            >Podrazumevano</mat-option>
+            <mat-option value="price-asc"   >Cena rastuce</mat-option>
+            <mat-option value="price-desc"  >Cena opadajuce</mat-option>
+            <mat-option value="rating"      >Najbolje ocenjeno</mat-option>
+            <mat-option value="name"        >Naziv A-Z</mat-option>
+        </mat-select>
+
+    </mat-form-field>
+
+    <button type="button" matButton (click)="resetFilters()">
+        <mat-icon fontIcon="restart_alt" /> Ponisti
+    </button>
+
+    @if(isLoggedIn()) {
+        <button type="button" matButton (click)="showFavorite()">
+            <mat-icon fontIcon="favorite" /> Moje omiljeno
+        </button>
+    }
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<h3 class="text-center">Pronadjeno igracaka: {{filteredToys().length}}</h3>
+
+@if(filteredToys().length > 0) {
+<div class="d-flex gap-10">
+    @for (t of filteredToys(); track $index) {
+
+    <mat-card class="toy-card" appearance="outlined">
+
+        <img mat-card-image [src]="t.image" [alt]="t.name">
+
+        <mat-card-content class="card-content">
+
+            <div class="toy-name">{{t.name}}</div>
+
+            <mat-chip-set>
+                <mat-chip highlighted>{{t.type}}</mat-chip>
+                <mat-chip>{{t.minAge}}+</mat-chip>
+                @if(toyService.getAverageRating(t) > 0) {
+                <mat-chip>
+                    <mat-icon matChipAvatar fontIcon="star" />
+                    {{toyService.getAverageRating(t)}}
+                </mat-chip>
+                }
+            </mat-chip-set>
+
+            <p class="toy-price">{{t.price}} RSD</p>
+            <p class="toy-meta">Za: {{toyService.getFullTargetGroupText(t.targetGroup)}}</p>
+            <p class="toy-meta">Recenzija: {{t.reviews.length}}</p>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <a [routerLink]="`/details/${t.id}`" matButton="filled" class="full-width">
+                <mat-icon fontIcon="visibility" /> Pogledaj detalje
+            </a>
+        </mat-card-actions>
+
+    </mat-card>
+    }
+</div>
+}
+
+@else {
+    <h3 class="text-center">Nema igracaka koje odgovaraju pretrazi</h3>
+}

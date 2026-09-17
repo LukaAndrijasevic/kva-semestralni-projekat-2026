@@ -4,6 +4,7 @@ import { MatToolbarModule }                 from '@angular/material/toolbar';
 import { MatButtonModule }                  from '@angular/material/button';
 import { MatMenuModule }                    from '@angular/material/menu';
 import { MatIconModule }                    from '@angular/material/icon';
+
 import { AuthService }                      from '../services/auth.service';
 
 @Component({
@@ -27,5 +28,9 @@ export class App {
   doLogout() {
     AuthService.logout()
     location.reload()
+  }
+
+  getCartCount() {
+    return AuthService.getReservationsByState('r').length
   }
 }

@@ -1,6 +1,6 @@
 @if(toy()) {
 <div class="d-flex gap-10 mb-10">
-    
+
     <mat-card class="details-card">
         <mat-card-content>
             <img [src]="toy()!.image" class="details-img">
@@ -36,20 +36,20 @@
                     <div matListItemTitle>Datum proizvodnje</div>
                     <div matListItemLine>{{toy()?.manufacturedAt}}</div>
                 </mat-list-item>
-
-                <mat-list-item>
-                    <mat-icon matListItemIcon>payments</mat-icon>
-                    <div matListItemTitle>Cena</div>
-                    <div matListItemLine>{{toy()?.price}} RSD</div>
-                </mat-list-item>
             </mat-list>
+
+            <div class="price-box">
+                <p class="price-value">{{toy()?.price}} RSD</p>
+            </div>
+
         </mat-card-content>
 
         <mat-card-actions class="gap-10">
             <button matButton type="button" (click)="goToReservation()">
                 <mat-icon fontIcon="add_shopping_cart" /> Rezervisi
             </button>
-            <a routerLink="/" matButton>            
+
+            <a routerLink="/store" matButton>
                 <mat-icon fontIcon="arrow_back" /> Nazad na ponudu
             </a>
         </mat-card-actions>
@@ -62,7 +62,7 @@
 
         @if(toy()!.reviews.length > 0) {
         <p>Prosecna ocena: {{toyService.getAverageRating(toy()!)}} / 5</p>
-        
+
         <mat-list>
 
             @for (r of toy()!.reviews; track $index) {
@@ -79,7 +79,7 @@
         @else {
         <p>Za ovu igracku jos nema recenzija.</p>
         }
-        
+
     </mat-card-content>
 </mat-card>
 }

@@ -1,10 +1,123 @@
-.toy-card {
-    min-width: 320px;
-    max-width: 360px;
-    width: 100%;
-    margin-bottom: 10px;
+.hero {
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--mat-sys-primary-container), var(--mat-sys-tertiary-container));
+    text-align: center;
+    padding: 30px 20px;
 }
 
-.card-content {
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+}
+
+.hero-text {
+    max-width: 560px;
+    margin: 0 auto 24px auto;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.hero-button {
+    font-size: 16px;
+    padding: 4px 24px;
+}
+
+.section-title {
+    text-align: center;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 16px;
+}
+
+.type-link {
+    text-decoration: none;
+}
+
+.type-card {
+    width: 140px;
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+}
+
+.type-card:hover {
+    transform: translateY(-4px);
+}
+
+.type-content {
+    text-align: center;
     padding-top: 16px;
+}
+
+.type-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    color: var(--mat-sys-primary);
+}
+
+.type-name {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.top-card {
+    min-width: 280px;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.top-content {
+    padding-top: 16px;
+    flex: 1 1 auto;
+}
+
+.top-name {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.top-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    color: var(--mat-sys-tertiary);
+    font-weight: 600;
+}
+
+.top-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    margin: 8px 0 0 0;
+}
+
+.info-card {
+    min-width: 260px;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 16px;
+}
+
+.info-content {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.info-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: var(--mat-sys-primary);
 }

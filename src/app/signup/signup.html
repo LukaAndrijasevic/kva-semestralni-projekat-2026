@@ -1,0 +1,70 @@
+<mat-card class="small-card mx-auto">
+
+    <mat-card-header>
+        <h1>Registracija</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div>
+            <mat-form-field class="full-width">
+                <mat-label>Ime</mat-label>
+                <input matInput type="text" [(ngModel)]="user.firstName">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Prezime</mat-label>
+                <input matInput type="text" [(ngModel)]="user.lastName">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Telefon</mat-label>
+                <input matInput type="text" [(ngModel)]="user.phone">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Adresa</mat-label>
+                <input matInput type="text" [(ngModel)]="user.address">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Grad</mat-label>
+                <input matInput type="text" [(ngModel)]="user.city">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Omiljena vrsta igracaka</mat-label>
+                <mat-select [(ngModel)]="user.favoriteType">
+                    @for (type of toyService.getTypes(); track type) {
+                    <mat-option [value]="type">{{type}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" [(ngModel)]="user.email">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Lozinka</mat-label>
+                <input matInput type="password" [(ngModel)]="user.password">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Ponovi lozinku</mat-label>
+                <input matInput type="password" [(ngModel)]="repeat">
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions class="gap-10">
+        <button type="button" matButton (click)="doSignup()">
+            <mat-icon fontIcon="person_add" /> Registruj se
+        </button>
+
+        <a routerLink="/login" matButton>
+            <mat-icon fontIcon="login" /> Imam nalog
+        </a>
+    </mat-card-actions>
+
+</mat-card>

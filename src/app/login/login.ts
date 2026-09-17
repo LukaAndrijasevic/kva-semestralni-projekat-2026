@@ -1,16 +1,18 @@
-import { Component }       from '@angular/core';
-import { FormsModule }     from '@angular/forms';
-import { Router }          from '@angular/router';
-import { MatCardModule }   from '@angular/material/card';
-import { MatInputModule }  from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule }   from '@angular/material/icon';
-import { AuthService }     from '../../services/auth.service';
-import { Alerts }          from '../alerts';
+import { Component }          from '@angular/core';
+import { FormsModule }        from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { MatCardModule }      from '@angular/material/card';
+import { MatInputModule }     from '@angular/material/input';
+import { MatButtonModule }    from '@angular/material/button';
+import { MatIconModule }      from '@angular/material/icon';
+
+import { AuthService }        from '../../services/auth.service';
+import { Alerts }             from '../alerts';
 
 @Component({
   imports:  [
             FormsModule,
+            RouterLink,
             MatCardModule,
             MatInputModule,
             MatButtonModule,

@@ -69,3 +69,12 @@
     background: var(--mat-sys-primary) !important;
     color: var(--mat-sys-on-primary)   !important;
 }
+
+mat-card {
+    border-radius: 16px !important;
+}
+
+.mat-mdc-table {
+    border-radius: 12px;
+    overflow: hidden;
+}

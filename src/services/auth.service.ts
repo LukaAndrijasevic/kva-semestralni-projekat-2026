@@ -120,4 +120,102 @@ export class AuthService {
 
         return []
     }
+
+    static cancelReservation(createdAt: string) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                for (let r of u.reservations) {
+                    if (r.state == 'r' && r.createdAt == createdAt) {
+                        r.state = 'o'
+                    }
+                }
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static receiveReservations() {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                for (let r of u.reservations) {
+                    if (r.state == 'r') {
+                        r.state = 'p'
+                    }
+                }
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static updateReservationCount(createdAt: string, count: number) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                for (let r of u.reservations) {
+                    if (r.state == 'r' && r.createdAt == createdAt) {
+                        r.count = count
+                    }
+                }
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static deleteReservation(createdAt: string) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                u.reservations = u.reservations.filter((r) => r.createdAt !== createdAt)
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static createUser(user: Partial<UserModel>) {
+        const users = this.getUsers()
+        user.reservations = []
+        users.push(user as UserModel)
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static existsByEmail(email: string) {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === email) return true
+        }
+
+        return false
+    }
+
+    static rateReservation(createdAt: string, rating: number){
+        const users = this.getUsers()
+        for (let u of users){
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                for (let r of u.reservations) {
+                    if (r.state == 'p' && r.createdAt == createdAt) {
+                        r.rating = rating
+                    }
+                }
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
+
+    static deleteCanceledReservations() {
+        const users = this.getUsers()
+        for (let u of users) {
+            if (u.email === localStorage.getItem(ACTIVE)) {
+                u.reservations = u.reservations.filter((r) => r.state !== 'o')
+            }
+        }
+
+        localStorage.setItem(USERS, JSON.stringify(users))
+    }
 }
